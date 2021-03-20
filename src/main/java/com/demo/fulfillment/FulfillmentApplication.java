@@ -21,7 +21,7 @@ public class FulfillmentApplication {
 	// https://stackoverflow.com/a/59016834
 	private static Properties props() {
 		Properties properties = new Properties();
-		properties.setProperty("logging.level.root", "debug");
+		// properties.setProperty("logging.level.root", "debug");
 		return properties;
 	}
 }

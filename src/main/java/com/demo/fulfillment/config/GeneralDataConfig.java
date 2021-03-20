@@ -20,7 +20,7 @@ import java.util.Properties;
 
 @Configuration
 @EnableTransactionManagement
-//@EnableJpaRepositories("com.demo.fulfillment.repositories")
+@EnableJpaRepositories("com.demo.fulfillment.repositories")
 public class GeneralDataConfig {
 
     @Autowired
