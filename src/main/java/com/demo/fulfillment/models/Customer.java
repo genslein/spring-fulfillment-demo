@@ -8,6 +8,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.sql.Date;
@@ -53,10 +54,12 @@ public class Customer {
     private Integer zipCode;
 
     @Column(name = "created_at")
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
     @CreationTimestamp
     private Date createdAt;
 
     @Column(name = "updated_at")
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
     @UpdateTimestamp
     private Date updatedAt;
 }
