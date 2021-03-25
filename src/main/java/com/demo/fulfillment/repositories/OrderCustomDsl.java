@@ -9,12 +9,8 @@ import com.querydsl.jpa.impl.JPAQuery;
 import org.springframework.data.jpa.repository.support.QuerydslRepositorySupport;
 import org.springframework.data.util.Pair;
 
-import java.lang.Object;
-
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
-
 
 public class OrderCustomDsl extends QuerydslRepositorySupport
         implements OrderCustom {
