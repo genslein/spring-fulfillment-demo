@@ -29,13 +29,13 @@ public class Customers {
 
     @PostMapping(consumes = MediaType.ALL_VALUE)
     @ResponseBody Customer createCustomer() {
-        String email = "chedards" +
+        String email = "chEdwardCheese" +
                 (new Random().nextInt()) +
                 "@someplace.com";
 
         return repository.save(Customer.builder()
                 .firstName("Charles")
-                .lastName("Edwards")
+                .lastName("Edward Cheese")
                 .email(email)
                 .addressOne("123 Smith Lane")
                 .city("New York")
