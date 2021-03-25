@@ -3,8 +3,6 @@
 This is the demo Fulfillment application associated with my blog posts about my experience with Java and Spring Boot as a Ruby lover.
 
 
-
-
 ### Auto-generated Getting Started Section
 
 #### Reference Documentation
@@ -30,3 +28,22 @@ The following guides illustrate how to use some features concretely:
 * [Spring Boot and OAuth2](https://spring.io/guides/tutorials/spring-boot-oauth2/)
 * [Authenticating a User with LDAP](https://spring.io/guides/gs/authenticating-ldap/)
 
+## Docker Debugging
+
+### Prometheus and Grafana locally
+Because Prometheus and Grafana are not required, they are optional to run.
+If there is a need/desire for validating metrics collection, you can add optionally.
+To run Prometheus + Grafana with your Spring Boot local environment use the following from
+the base directory of this repository:
+```bash
+docker-compose -f docker-compose.yml -f docker-prometheus/docker-compose.yml up -d
+docker-compose -f docker-compose.yml -f docker-prometheus/docker-compose.yml ps
+```
+Locations as follows:
+- [Prometheus port 9090](http://localhost:9090)
+- [Grafana 3000](http://localhost:3000)
+    - user:pw is admin:admin
+    - You will need to configure the dashboard and datasource manually for now
+- [JVM dashboard Template](https://grafana.com/grafana/dashboards/4701)
+    - [Postgresql Dashboard](https://grafana.com/grafana/dashboards/9628)
+    - List of [Other dashboard templates](https://grafana.com/grafana/dashboards)
