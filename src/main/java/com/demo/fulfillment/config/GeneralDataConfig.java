@@ -1,10 +1,6 @@
 package com.demo.fulfillment.config;
 
-
-import com.zaxxer.hikari.HikariConfig;
-import com.zaxxer.hikari.HikariDataSource;
 import org.hibernate.cfg.Environment;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor;
@@ -22,10 +18,6 @@ import java.util.Properties;
 @EnableTransactionManagement
 @EnableJpaRepositories("com.demo.fulfillment.repositories")
 public class GeneralDataConfig {
-
-    @Autowired
-    FulfillmentEnvProperties envProperties;
-
     final Properties additionalProperties() {
         final Properties hibernateProperties = new Properties();
         hibernateProperties.setProperty(Environment.HBM2DDL_AUTO, "update");
@@ -34,21 +26,6 @@ public class GeneralDataConfig {
         hibernateProperties.setProperty(Environment.FORMAT_SQL, "true");
 
         return hibernateProperties;
-    }
-
-    @Bean
-    public DataSource dataSource() {
-        HikariConfig config = new HikariConfig();
-        config.setJdbcUrl(envProperties.databaseConnectionString);
-        config.setUsername(envProperties.databaseUser);
-        config.setPassword(envProperties.databasePassword);
-        config.setConnectionTimeout(20000);
-        config.setMaximumPoolSize(20);
-        config.setMinimumIdle(10);
-        config.setIdleTimeout(300000);
-        config.setDriverClassName(org.postgresql.Driver.class.getCanonicalName());
-
-        return new HikariDataSource(config);
     }
 
     @Bean
