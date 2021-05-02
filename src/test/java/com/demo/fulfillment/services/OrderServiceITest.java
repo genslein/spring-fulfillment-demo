@@ -6,6 +6,7 @@ import com.demo.fulfillment.models.Order;
 import com.demo.fulfillment.models.subtypes.OrderItem;
 import com.demo.fulfillment.repositories.CustomerRepository;
 import com.demo.fulfillment.repositories.OrderRepository;
+import org.assertj.core.util.Arrays;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +14,7 @@ import org.springframework.data.util.Pair;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
@@ -36,7 +38,7 @@ public class OrderServiceITest extends BaseITest {
     }
 
     @Test
-    public void getEachCustomerOrder_returnsListOfPairs() throws InterruptedException {
+    public void getEachCustomerOrder_returnsListOfPairs() {
         List<Customer> customersList = new ArrayList<>();
         for (int i = 1; i < 10; i++) {
             customersList.add(Customer.builder().email("customer_" + i)
@@ -69,32 +71,26 @@ public class OrderServiceITest extends BaseITest {
                 .quantity(1)
                 .build());
 
-        List<Order> originals = new ArrayList<>();
-        List<Order> latestOrders = new ArrayList<>();
+        List<Order> startingOrders = new ArrayList<>();
         for (Customer customer : customersList) {
-            originals.add(repository.save(Order.builder()
-                    .customerId(customer.getId())
-                    .items(firstList)
-                    .build()));
+            startingOrders.add(Order.builder()
+                            .customerId(customer.getId())
+                            .items(secondList)
+                            .build());
 
-            latestOrders.add(Order.builder()
-                    .customerId(customer.getId())
-                    .items(secondList)
-                    .build());
+            startingOrders.add(Order.builder()
+                            .customerId(customer.getId())
+                            .items(firstList)
+                            .build());
         }
 
-        // Delay to change auto-generated timestamps in database
-        TimeUnit.SECONDS.sleep(2);
-        latestOrders = repository.saveAll(latestOrders);
-
+        startingOrders = repository.saveAll(startingOrders);
         List<Pair<Order, Customer>> customerOrders = service.getEachCustomerOrder();
 
-        assertThat(customerOrders.size()).isEqualTo(latestOrders.size() + originals.size());
+        assertThat(customerOrders.size()).isEqualTo(startingOrders.size());
 
-        // Check that only orders in the later list appear
-        List<Order> actual = customerOrders.stream().map(Pair::getFirst).collect(Collectors.toList());
-
-        assertThat(actual).isIn(latestOrders);
-        assertThat(originals).isIn(latestOrders);
+        // Check that all orders loaded successfully
+        List<UUID> actual = customerOrders.stream().map(f -> f.getFirst().getId()).collect(Collectors.toList());
+        assertThat(actual).isEqualTo(startingOrders.stream().map(Order::getId).collect(Collectors.toList()));
     }
 }

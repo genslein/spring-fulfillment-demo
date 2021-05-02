@@ -43,6 +43,7 @@ public class Order {
     @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     @LazyToOne(LazyToOneOption.NO_PROXY)
+    @Fetch(FetchMode.JOIN)
     @LazyGroup("customers")
     @JoinColumn(name = "customer_id", insertable = false, updatable = false,
                 foreignKey = @ForeignKey(name = "fk_customer_id_order"))
