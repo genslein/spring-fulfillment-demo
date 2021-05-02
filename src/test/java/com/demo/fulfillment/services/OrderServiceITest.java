@@ -36,7 +36,7 @@ public class OrderServiceITest extends BaseITest {
     }
 
     @Test
-    public void getEachCustomerFirstOrder_returnsListOfPairs() throws InterruptedException {
+    public void getEachCustomerOrder_returnsListOfPairs() throws InterruptedException {
         List<Customer> customersList = new ArrayList<>();
         for (int i = 1; i < 10; i++) {
             customersList.add(Customer.builder().email("customer_" + i)
@@ -69,12 +69,13 @@ public class OrderServiceITest extends BaseITest {
                 .quantity(1)
                 .build());
 
+        List<Order> originals = new ArrayList<>();
         List<Order> latestOrders = new ArrayList<>();
         for (Customer customer : customersList) {
-            repository.save(Order.builder()
+            originals.add(repository.save(Order.builder()
                     .customerId(customer.getId())
                     .items(firstList)
-                    .build());
+                    .build()));
 
             latestOrders.add(Order.builder()
                     .customerId(customer.getId())
@@ -86,12 +87,14 @@ public class OrderServiceITest extends BaseITest {
         TimeUnit.SECONDS.sleep(2);
         latestOrders = repository.saveAll(latestOrders);
 
-        List<Pair<Customer, Order>> customerOrders = service.getEachCustomerFirstOrder();
+        List<Pair<Order, Customer>> customerOrders = service.getEachCustomerOrder();
 
-        assertThat(customerOrders.size()).isEqualTo(latestOrders.size());
+        assertThat(customerOrders.size()).isEqualTo(latestOrders.size() + originals.size());
 
         // Check that only orders in the later list appear
-        List<Order> actual = customerOrders.stream().map(Pair::getSecond).collect(Collectors.toList());
-        assertThat(latestOrders).isEqualTo(actual);
+        List<Order> actual = customerOrders.stream().map(Pair::getFirst).collect(Collectors.toList());
+
+        assertThat(actual).isIn(latestOrders);
+        assertThat(originals).isIn(latestOrders);
     }
 }

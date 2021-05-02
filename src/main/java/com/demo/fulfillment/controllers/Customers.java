@@ -11,7 +11,7 @@ import java.util.Random;
 import java.util.UUID;
 
 @RestController
-@RequestMapping(name = "/customers", produces = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(value = "/customers", produces = MediaType.APPLICATION_JSON_VALUE)
 public class Customers {
 
     @Autowired
@@ -23,7 +23,7 @@ public class Customers {
     }
 
     @GetMapping("/{id}")
-    @ResponseBody Customer getCustomers(@PathVariable UUID id) {
+    @ResponseBody Customer findCustomer(@PathVariable UUID id) {
         return repository.findById(id).orElse(null);
     }
 

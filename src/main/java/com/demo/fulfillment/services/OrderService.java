@@ -23,10 +23,10 @@ public class OrderService {
         return (List<Order>) orderRepository.findAll(predicate);
     }
 
-    public List<Pair<Customer, Order>> getEachCustomerFirstOrder() {
-        List<Pair<Customer, Order>> firstOrders;
+    public List<Pair<Order, Customer>> getEachCustomerOrder() {
+        List<Pair<Order, Customer>> firstOrders;
 
-        firstOrders = orderRepository.getFirstOrderPerCustomer();
+        firstOrders = orderRepository.getOrderCustomerRecords();
         logger.info("Found pairs of customer orders: " + firstOrders.size());
         return firstOrders;
     }

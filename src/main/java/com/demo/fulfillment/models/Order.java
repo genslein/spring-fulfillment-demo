@@ -40,11 +40,12 @@ public class Order {
     @Column(name = "customer_id")
     private UUID customerId;
 
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
+    @LazyToOne(LazyToOneOption.NO_PROXY)
+    @LazyGroup("customers")
     @JoinColumn(name = "customer_id", insertable = false, updatable = false,
                 foreignKey = @ForeignKey(name = "fk_customer_id_order"))
-    @Fetch(FetchMode.JOIN)
-    @JsonIgnore
     private Customer customer;
 
     @Type(type = "jsonb")

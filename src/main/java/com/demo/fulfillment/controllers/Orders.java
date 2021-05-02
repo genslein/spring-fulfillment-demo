@@ -21,13 +21,13 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping(name = "/orders", produces = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(value = "/orders", produces = MediaType.APPLICATION_JSON_VALUE)
 public class Orders {
 
     @Autowired
     OrderService orderService;
 
-    @GetMapping
+    @GetMapping(value = "/report-latest")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200",
                     description = "Found the Customer Orders",
@@ -42,12 +42,12 @@ public class Orders {
                     description = "Issue searching for customer orders",
                     content = @Content)
     })
-    @ResponseBody List<Pair<Customer, Order>> getCustomerOrders() {
-        return orderService.getEachCustomerFirstOrder();
+    @ResponseBody List<Pair<Order, Customer>> getCustomerOrders() {
+        return orderService.getEachCustomerOrder();
     }
 
     @GetMapping
-    @ResponseBody List<Order> searchOrders(@QuerydslPredicate Predicate predicate) {
+    @ResponseBody List<Order> searchOrders(@QuerydslPredicate(root = Order.class) Predicate predicate) {
         return orderService.searchOrders(predicate);
     }
 }
