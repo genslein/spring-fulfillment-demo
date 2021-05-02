@@ -27,7 +27,9 @@ public class OrderCustomDsl extends QuerydslRepositorySupport
 
         List<Pair<Customer, Order>> resultList = new ArrayList<>();
         for (Tuple t : result) {
-            resultList.add(Pair.of(t.get(QCustomer.customer), t.get(QOrder.order)));
+            if (t.get(QCustomer.customer) != null && t.get(QOrder.order) != null) {
+                resultList.add(Pair.of(t.get(QCustomer.customer), t.get(QOrder.order)));
+            }
         }
 
         return resultList;

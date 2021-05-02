@@ -4,6 +4,8 @@ import com.demo.fulfillment.models.Customer;
 import com.demo.fulfillment.models.Order;
 import com.demo.fulfillment.repositories.OrderRepository;
 import com.querydsl.core.types.Predicate;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.util.Pair;
 import org.springframework.stereotype.Service;
@@ -12,6 +14,7 @@ import java.util.List;
 
 @Service
 public class OrderService {
+    private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @Autowired
     OrderRepository orderRepository;
@@ -21,9 +24,10 @@ public class OrderService {
     }
 
     public List<Pair<Customer, Order>> getEachCustomerFirstOrder() {
-        List<Pair<Customer, Order>> firstOrders = null;
+        List<Pair<Customer, Order>> firstOrders;
 
         firstOrders = orderRepository.getFirstOrderPerCustomer();
+        logger.info("Found pairs of customer orders: " + firstOrders.size());
         return firstOrders;
     }
 }
