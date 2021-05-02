@@ -11,6 +11,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.querydsl.binding.QuerydslPredicate;
 import org.springframework.data.util.Pair;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -28,15 +29,20 @@ public class Orders {
 
     @GetMapping
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Found the book",
-                    content = { @Content(mediaType = "application/json",
-                            schema = @Schema(implementation = Order.class)) }),
-            @ApiResponse(responseCode = "400", description = "Invalid id supplied",
+            @ApiResponse(responseCode = "200",
+                    description = "Found the Customer Orders",
+                    content = {
+                        @Content(mediaType = MediaType.APPLICATION_JSON_VALUE,
+                                schema = @Schema(implementation = Pair.class))
+            }),
+            @ApiResponse(responseCode = "400",
+                    description = "No customer orders",
                     content = @Content),
-            @ApiResponse(responseCode = "404", description = "Book not found",
-                    content = @Content) })
-    @ResponseBody
-    List<Pair<Customer, Order>> getCustomerOrders() {
+            @ApiResponse(responseCode = "500",
+                    description = "Issue searching for customer orders",
+                    content = @Content)
+    })
+    @ResponseBody List<Pair<Customer, Order>> getCustomerOrders() {
         return orderService.getEachCustomerFirstOrder();
     }
 
