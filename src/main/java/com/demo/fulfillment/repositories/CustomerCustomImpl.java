@@ -11,7 +11,8 @@ import org.springframework.data.jpa.repository.support.QuerydslRepositorySupport
 import java.util.ArrayList;
 import java.util.List;
 
-public class CustomerCustomImpl extends QuerydslRepositorySupport {
+public class CustomerCustomImpl extends QuerydslRepositorySupport
+ implements CustomerCustom {
 
     public CustomerCustomImpl() { super(Customer.class); }
 
@@ -22,7 +23,6 @@ public class CustomerCustomImpl extends QuerydslRepositorySupport {
                 .from(QCustomer.customer)
                 .join(QOrder.order)
                 .on(QCustomer.customer.id.eq(QOrder.order.customerId))
-                .groupBy(QCustomer.customer.id)
                 .orderBy(QOrder.order.createdAt.desc())
                 .fetch();
 

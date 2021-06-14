@@ -91,18 +91,14 @@ public class CustomerServiceITest extends BaseITest {
         assertThat(firstCustomerOrders.size()).isEqualTo(startingOrders.size());
 
         // Check that all orders loaded successfully
-        List<UUID> actual = firstCustomerOrders.stream().map(f -> f.getOrder().getId()).collect(Collectors.toList());
-        assertThat(actual).isEqualTo(startingOrders.stream().map(Order::getId).collect(Collectors.toList()));
+        List<UUID> actual = firstCustomerOrders.stream().map(f -> f.getOrder().getId()).sorted().collect(Collectors.toList());
+        assertThat(actual).isEqualTo(startingOrders.stream().map(Order::getId).sorted().collect(Collectors.toList()));
 
         laterOrders = repository.saveAll(laterOrders);
         List<CustomerOrder> secondCustomerOrders = service.getLatestCustomerOrders();
 
-        assertThat(secondCustomerOrders.size()).isEqualTo(laterOrders.size());
-
         // Check that all orders loaded successfully
-        actual = secondCustomerOrders.stream().map(f -> f.getOrder().getId()).collect(Collectors.toList());
-        assertThat(actual).isEqualTo(laterOrders.stream().map(Order::getId).collect(Collectors.toList()));
-
-        assertThat(secondCustomerOrders).isNotIn(firstCustomerOrders);
+        actual = secondCustomerOrders.stream().map(f -> f.getOrder().getId()).sorted().collect(Collectors.toList());
+        assertThat(actual).containsAll(laterOrders.stream().map(Order::getId).sorted().collect(Collectors.toList()));
     }
 }
