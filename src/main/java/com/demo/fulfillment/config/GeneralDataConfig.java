@@ -2,6 +2,7 @@ package com.demo.fulfillment.config;
 
 import io.micrometer.core.aop.TimedAspect;
 import io.micrometer.core.instrument.MeterRegistry;
+import io.micrometer.core.instrument.config.MeterFilter;
 import org.hibernate.cfg.Environment;
 import org.springdoc.core.GroupedOpenApi;
 import org.springframework.context.annotation.Bean;
@@ -24,6 +25,7 @@ import java.util.Properties;
 public class GeneralDataConfig {
     final Properties additionalProperties() {
         final Properties hibernateProperties = new Properties();
+        hibernateProperties.put(Environment.GENERATE_STATISTICS, true);
         hibernateProperties.setProperty(Environment.HBM2DDL_AUTO, "update");
         hibernateProperties.setProperty(Environment.DIALECT, org.hibernate.dialect.PostgreSQL10Dialect.class.getCanonicalName());
         hibernateProperties.setProperty(Environment.SHOW_SQL, "true");
