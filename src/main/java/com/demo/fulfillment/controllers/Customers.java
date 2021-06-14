@@ -38,6 +38,11 @@ public class Customers {
     }
 
     @PostMapping(consumes = MediaType.ALL_VALUE)
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Created Random Customer",
+                    content = { @Content(mediaType = MediaType.APPLICATION_JSON_VALUE,
+                            schema = @Schema(implementation = Customer.class)) }),
+            @ApiResponse(responseCode = "500", description = "Unable to create Customer") })
     @ResponseBody Customer createCustomer() {
         String email = "chEdwardCheese" +
                 (new Random().nextInt()) +

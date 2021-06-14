@@ -12,7 +12,6 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.querydsl.binding.QuerydslPredicate;
 import org.springframework.data.util.Pair;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -28,7 +27,7 @@ public class Orders {
     @Autowired
     OrderService orderService;
 
-    @GetMapping(value = "/report-latest")
+    @GetMapping(value = "/report")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200",
                     description = "Found the Customer Orders",
@@ -39,16 +38,31 @@ public class Orders {
                                 ))}),
             @ApiResponse(responseCode = "400",
                     description = "No customer orders",
-                    content = @Content),
+                    content = @Content(schema = @Schema(implementation = String.class))),
             @ApiResponse(responseCode = "500",
                     description = "Issue searching for customer orders",
-                    content = @Content)
+                    content = @Content(schema = @Schema(implementation = String.class)))
     })
     @ResponseBody List<Pair<Order, Customer>> getCustomerOrders() {
         return orderService.getEachCustomerOrder();
     }
 
     @GetMapping
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200",
+                    description = "List all Orders",
+                    content = {
+                            @Content(mediaType = MediaType.APPLICATION_JSON_VALUE,
+                                    array = @ArraySchema(
+                                            schema = @Schema(implementation = Order.class)
+                                    ))}),
+            @ApiResponse(responseCode = "400",
+                    description = "No Orders found",
+                    content = @Content(schema = @Schema(implementation = String.class))),
+            @ApiResponse(responseCode = "500",
+                    description = "Issue searching for Orders",
+                    content = @Content(schema = @Schema(implementation = String.class)))
+    })
     @ResponseBody List<Order> searchOrders(@QuerydslPredicate(root = Order.class) Predicate predicate) {
         return orderService.searchOrders(predicate);
     }
