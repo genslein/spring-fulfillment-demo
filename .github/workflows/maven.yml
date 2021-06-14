@@ -3,17 +3,17 @@
 
 name: Java CI with Maven
 
-
-on: 
+on:
   push:
-    branches: 
+    branches:
       - '*'
   pull_request:
-    branches: 
+    branches:
       - '*'
 
 jobs:
   build:
+
     runs-on: ubuntu-latest
 
     steps:
@@ -23,5 +23,5 @@ jobs:
       with:
         java-version: '15'
         distribution: 'adopt'
-    - name: Test with Maven
-      run: mvn --batch-mode --update-snapshots test
+    - name: Build with Maven
+      run: mvn -B package --file pom.xml
