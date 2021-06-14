@@ -2,6 +2,10 @@ package com.demo.fulfillment.controllers;
 
 import com.demo.fulfillment.models.Customer;
 import com.demo.fulfillment.repositories.CustomerRepository;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
@@ -18,6 +22,12 @@ public class Customers {
     CustomerRepository repository;
 
     @GetMapping
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "List Customers",
+                    content = { @Content(mediaType = MediaType.APPLICATION_JSON_VALUE,
+                            schema = @Schema(implementation = Customer.class)) }),
+            @ApiResponse(responseCode = "404", description = "Customers not found",
+                    content = @Content) })
     @ResponseBody List<Customer> getCustomers() {
         return repository.findAll();
     }

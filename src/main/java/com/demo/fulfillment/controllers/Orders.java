@@ -4,6 +4,7 @@ import com.demo.fulfillment.models.Customer;
 import com.demo.fulfillment.models.Order;
 import com.demo.fulfillment.services.OrderService;
 import com.querydsl.core.types.Predicate;
+import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -33,8 +34,9 @@ public class Orders {
                     description = "Found the Customer Orders",
                     content = {
                         @Content(mediaType = MediaType.APPLICATION_JSON_VALUE,
-                                schema = @Schema(implementation = Pair.class))
-            }),
+                                array = @ArraySchema(
+                                        schema = @Schema(implementation = Pair.class)
+                                ))}),
             @ApiResponse(responseCode = "400",
                     description = "No customer orders",
                     content = @Content),
