@@ -30,6 +30,20 @@ public class FulfillmentApplication {
 	private static Properties props() {
 		Properties properties = new Properties();
 		// properties.setProperty("logging.level.root", "debug");
+		properties.setProperty("springdoc.show-actuator","true");
+		properties.setProperty("springdoc.swagger-ui.persistAuthorization", "true");
+		properties.setProperty("springdoc.model-converters.deprecating-converter.enabled", "false");
+
+		// https://docs.spring.io/spring-boot/docs/current/reference/html/production-ready-features.html#production-ready-endpoints-enabling-endpoints
+		properties.setProperty("management.endpoint.enabled-by-default", "false");
+		properties.setProperty("management.endpoint.info.enabled", "true");
+		properties.setProperty("management.endpoint.health.enabled", "true");
+		properties.setProperty("management.endpoint.health.show-details", "always");
+		properties.setProperty("management.endpoint.metrics.enabled", "true");
+		properties.setProperty("management.endpoint.prometheus.enabled", "true");
+		properties.setProperty("management.metrics.export.prometheus.enabled", "true");
+		properties.setProperty("management.endpoints.web.exposure.include", "info,health,prometheus,metrics");
+
 		return properties;
 	}
 }
