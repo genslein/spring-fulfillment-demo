@@ -2,10 +2,12 @@ package com.demo.fulfillment.config;
 
 import io.micrometer.core.aop.TimedAspect;
 import io.micrometer.core.instrument.MeterRegistry;
+import io.micrometer.core.instrument.config.MeterFilter;
 import org.hibernate.cfg.Environment;
 import org.springdoc.core.GroupedOpenApi;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.DependsOn;
 import org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.orm.jpa.JpaTransactionManager;
@@ -23,6 +25,7 @@ import java.util.Properties;
 public class GeneralDataConfig {
     final Properties additionalProperties() {
         final Properties hibernateProperties = new Properties();
+        hibernateProperties.put(Environment.GENERATE_STATISTICS, true);
         hibernateProperties.setProperty(Environment.HBM2DDL_AUTO, "update");
         hibernateProperties.setProperty(Environment.DIALECT, org.hibernate.dialect.PostgreSQL10Dialect.class.getCanonicalName());
         hibernateProperties.setProperty(Environment.SHOW_SQL, "true");
@@ -32,11 +35,11 @@ public class GeneralDataConfig {
     }
 
     @Bean
+    @DependsOn("dataSource")
     public LocalContainerEntityManagerFactoryBean entityManagerFactory(DataSource dataSource) {
         LocalContainerEntityManagerFactoryBean entityManagerFactory = new LocalContainerEntityManagerFactoryBean();
-        entityManagerFactory.setPackagesToScan("com.demo.fulfillment.models");
-
         entityManagerFactory.setDataSource(dataSource);
+        entityManagerFactory.setPackagesToScan("com.demo.fulfillment.models");
 
         HibernateJpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
         vendorAdapter.setDatabasePlatform(org.hibernate.dialect.PostgreSQL10Dialect.class.getCanonicalName());

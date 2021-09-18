@@ -8,9 +8,8 @@ services:
       dockerfile: Dockerfile
     restart: 'no'
     environment:
-      POSTGRES_USER: bart
-      POSTGRES_PW: 51mp50n
-      DATABASE_CONN_URL: jdbc:postgresql://postgres_db:5432/postgres?user=bart&password=51mp50n
+      SPRING_PROFILES_ACTIVE: production
+      JDBC_DATABASE_URL: jdbc:postgresql://postgres_db:5432/postgres?user=bart&password=51mp50n
     ports:
       - '8080:8080'
       - '5005:5005'

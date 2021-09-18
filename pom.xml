@@ -22,12 +22,13 @@
 		<org.springframework.data.version>2.5.4</org.springframework.data.version>
 		<hibernate.version>5.4.30.Final</hibernate.version>
 		<com.querydsl.version>4.4.0</com.querydsl.version>
-		<okhttp3.version>3.14.19</okhttp3.version>
+		<okhttp3.version>3.14.9</okhttp3.version>
 		<junit-jupiter.version>5.7.1</junit-jupiter.version>
 		<testcontainers.version>1.16.0</testcontainers.version>
 		<docker.registry>dockerhub.com</docker.registry>
 		<docker.namespace>genslein</docker.namespace>
 		<springdoc.version>1.5.10</springdoc.version>
+		<io.restassured.version>[4.3,)</io.restassured.version>
 	</properties>
 
 	<dependencies>
@@ -80,17 +81,22 @@
 		</dependency>
 
 <!-- 		Documentation Generation For OpenAPI	-->
-		<dependency>
-			<groupId>org.springdoc</groupId>
-			<artifactId>springdoc-openapi-webmvc-core</artifactId>
-			<version>${springdoc.version}</version>
-		</dependency>
+        <dependency>
+            <groupId>org.springdoc</groupId>
+            <artifactId>springdoc-openapi-ui</artifactId>
+            <version>${springdoc.version}</version>
+        </dependency>
 
 		<dependency>
 			<groupId>org.springdoc</groupId>
-			<artifactId>springdoc-openapi-webflux-core</artifactId>
+			<artifactId>springdoc-openapi-data-rest</artifactId>
 			<version>${springdoc.version}</version>
 		</dependency>
+<!--		<dependency>-->
+<!--			<groupId>org.springdoc</groupId>-->
+<!--			<artifactId>springdoc-openapi-security</artifactId>-->
+<!--			<version>${springdoc.version}</version>-->
+<!--		</dependency>-->
 
 		<dependency>
 			<groupId>com.vladmihalcea</groupId>
@@ -100,10 +106,12 @@
 		<dependency>
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-hikaricp</artifactId>
+			<version>${hibernate.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-entitymanager</artifactId>
+			<version>${hibernate.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.hibernate.validator</groupId>
@@ -134,6 +142,7 @@
 		<dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
+			<version>[1.18.20,)</version>
 		</dependency>
 <!--		<dependency>-->
 <!--			<groupId>org.flywaydb</groupId>-->
@@ -142,6 +151,11 @@
 <!--		</dependency>-->
 
 		<!--	 Testing Dependencies 	 -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-test</artifactId>
+			<scope>test</scope>
+		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
@@ -158,6 +172,38 @@
 			<scope>test</scope>
 		</dependency>
 
+		<dependency>
+			<groupId>io.rest-assured</groupId>
+			<artifactId>rest-assured</artifactId>
+			<version>${io.restassured.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>io.rest-assured</groupId>
+			<artifactId>rest-assured-all</artifactId>
+			<version>${io.restassured.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>io.rest-assured</groupId>
+			<artifactId>json-path</artifactId>
+			<version>${io.restassured.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.hamcrest</groupId>
+			<artifactId>hamcrest</artifactId>
+			<version>[2.2,)</version>
+		</dependency>
+		<dependency>
+			<groupId>org.hamcrest</groupId>
+			<artifactId>hamcrest-core</artifactId>
+			<version>[2.2,)</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.hamcrest</groupId>
+			<artifactId>hamcrest-library</artifactId>
+			<version>[2.2,)</version>
+			<scope>test</scope>
+		</dependency>
 		<dependency>
 			<groupId>org.junit.jupiter</groupId>
 			<artifactId>junit-jupiter-api</artifactId>
@@ -196,8 +242,56 @@
 		</dependency>
 		<dependency>
 			<groupId>org.testcontainers</groupId>
+			<artifactId>localstack</artifactId>
+			<version>${testcontainers.version}</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.testcontainers</groupId>
 			<artifactId>rabbitmq</artifactId>
 			<version>${testcontainers.version}</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.amqp</groupId>
+			<artifactId>spring-rabbit-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.assertj</groupId>
+			<artifactId>assertj-core</artifactId>
+			<version>3.18.0</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>io.rest-assured</groupId>
+			<artifactId>json-schema-validator</artifactId>
+			<version>${io.restassured.version}</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>io.rest-assured</groupId>
+			<artifactId>rest-assured-common</artifactId>
+			<version>${io.restassured.version}</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>io.rest-assured</groupId>
+			<artifactId>spring-mock-mvc</artifactId>
+			<version>${io.restassured.version}</version>
+			<scope>test</scope>
+		</dependency>
+		<!-- okhttp for Client testing -->
+		<dependency>
+			<groupId>com.squareup.okhttp3</groupId>
+			<artifactId>okhttp</artifactId>
+			<version>${okhttp3.version}</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.squareup.okhttp3</groupId>
+			<artifactId>mockwebserver</artifactId>
+			<version>${okhttp3.version}</version>
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
@@ -217,6 +311,18 @@
 	<build>
 		<!-- ******* WARNING: ORDER MATTERS FOR PLUGIN EXECUTION *****************  -->
 		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<dependencies>
+					<dependency>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-surefire-plugin</artifactId>
+						<version>2.22.2</version>
+						<type>maven-plugin</type>
+					</dependency>
+				</dependencies>
+			</plugin>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
@@ -284,18 +390,6 @@
 <!--				</executions>-->
 			</plugin>
 			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-surefire-plugin</artifactId>
-				<dependencies>
-					<dependency>
-						<groupId>org.apache.maven.plugins</groupId>
-						<artifactId>maven-surefire-plugin</artifactId>
-						<version>2.22.2</version>
-						<type>maven-plugin</type>
-					</dependency>
-				</dependencies>
-			</plugin>
-			<plugin>
 				<groupId>io.fabric8</groupId>
 				<artifactId>docker-maven-plugin</artifactId>
 				<version>0.34.0</version>
@@ -332,7 +426,7 @@
 			<plugin>
 				<groupId>org.hibernate.orm.tooling</groupId>
 				<artifactId>hibernate-enhance-maven-plugin</artifactId>
-				<version>5.4.30.Final</version>
+				<version>${hibernate.version}</version>
 				<executions>
 					<execution>
 						<configuration>

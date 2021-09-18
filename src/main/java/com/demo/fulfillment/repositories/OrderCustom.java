@@ -7,5 +7,5 @@ import org.springframework.data.util.Pair;
 import java.util.List;
 
 public interface OrderCustom {
-    public List<Pair<Customer, Order>> getFirstOrderPerCustomer();
+    List<Pair<Order, Customer>> getOrderCustomerRecords();
 }

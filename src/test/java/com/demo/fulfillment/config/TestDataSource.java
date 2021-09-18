@@ -15,15 +15,17 @@ public class TestDataSource {
 
     @Bean
     PostgreSQLContainer postgreSQLContainer() {
-        final PostgreSQLContainer postgreSQLContainer = new PostgreSQLContainer()
+        final PostgreSQLContainer<?> container = new PostgreSQLContainer<>("postgres:12")
                 .withDatabaseName("postgres")
                 .withUsername("bart")
                 .withPassword("51mp50n");
-        return postgreSQLContainer;
+        container.start();
+
+        return container;
     }
 
     @Bean
-    public DataSource dataSource(PostgreSQLContainer container) {
+    public DataSource dataSource(final PostgreSQLContainer container) {
         HikariConfig config = new HikariConfig();
         config.setJdbcUrl(container.getJdbcUrl());
         config.setUsername(container.getUsername());

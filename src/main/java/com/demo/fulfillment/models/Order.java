@@ -1,6 +1,6 @@
 package com.demo.fulfillment.models;
 
-import com.demo.fulfillment.models.subtypes.OrderItems;
+import com.demo.fulfillment.models.subtypes.OrderItem;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
@@ -18,6 +18,7 @@ import javax.persistence.Entity;
 import javax.persistence.ForeignKey;
 import javax.persistence.Table;
 import java.sql.Date;
+import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -39,16 +40,18 @@ public class Order {
     @Column(name = "customer_id")
     private UUID customerId;
 
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
+    @LazyToOne(LazyToOneOption.NO_PROXY)
+    @Fetch(FetchMode.JOIN)
+    @LazyGroup("customers")
     @JoinColumn(name = "customer_id", insertable = false, updatable = false,
                 foreignKey = @ForeignKey(name = "fk_customer_id_order"))
-    @Fetch(FetchMode.JOIN)
-    @JsonIgnore
     private Customer customer;
 
     @Type(type = "jsonb")
     @Column(name = "items", columnDefinition = "jsonb")
-    private OrderItems items;
+    private List<OrderItem> items;
 
     @Column(name = "created_at")
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)

@@ -17,8 +17,8 @@ import javax.sql.DataSource;
 @Profile("production")
 @Configuration
 public class DataSourceConfig {
-    @Autowired
-    FulfillmentEnvProperties envProperties;
+    @Value("${JDBC_DATABASE_URL}")
+    public String JDBC_DATABASE_URL;
 
     // Default to false for environment deployments to not auto-migrate
     // set to true for local test suite
@@ -42,9 +42,7 @@ public class DataSourceConfig {
     @Bean
     public DataSource dataSource() {
         HikariConfig config = new HikariConfig();
-        config.setJdbcUrl(envProperties.databaseConnectionString);
-        config.setUsername(envProperties.databaseUser);
-        config.setPassword(envProperties.databasePassword);
+        config.setJdbcUrl(JDBC_DATABASE_URL);
         config.setConnectionTimeout(20000);
         config.setMaximumPoolSize(20);
         config.setMinimumIdle(10);
