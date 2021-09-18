@@ -1,6 +1,9 @@
 package com.demo.fulfillment.config;
 
+import io.micrometer.core.aop.TimedAspect;
+import io.micrometer.core.instrument.MeterRegistry;
 import org.hibernate.cfg.Environment;
+import org.springdoc.core.GroupedOpenApi;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor;
@@ -56,5 +59,26 @@ public class GeneralDataConfig {
     @Bean
     public PersistenceExceptionTranslationPostProcessor exceptionTranslation() {
         return new PersistenceExceptionTranslationPostProcessor();
+    }
+
+    @Bean
+    public TimedAspect timedAspect(MeterRegistry registry) {
+        return new TimedAspect(registry);
+    }
+
+    @Bean
+    public GroupedOpenApi actuatorApi() {
+        return GroupedOpenApi.builder()
+                .group("actuator")
+                .pathsToMatch("/actuator/**")
+                .build();
+    }
+
+    @Bean
+    public GroupedOpenApi fulfillmentApi() {
+        return GroupedOpenApi.builder()
+                .group("fulfillment")
+                .packagesToScan("com.demo.fulfillment.controllers")
+                .build();
     }
 }
