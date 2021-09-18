@@ -11,22 +11,23 @@
 
 	<groupId>com.demo</groupId>
 	<artifactId>fulfillment</artifactId>
-	<version>0.0.2-SNAPSHOT</version>
+	<version>0.0.3-SNAPSHOT</version>
 	<name>fulfillment</name>
 	<description>Order Fulfillment Demo application for Spring Boot</description>
 
 	<properties>
 		<java.version>15</java.version>
-		<testcontainers.version>1.15.0</testcontainers.version>
 		<postgresql.driver.version>42.2.23</postgresql.driver.version>
 		<org.springframework.version>5.3.9</org.springframework.version>
 		<org.springframework.data.version>2.5.4</org.springframework.data.version>
 		<hibernate.version>5.4.30.Final</hibernate.version>
 		<com.querydsl.version>4.4.0</com.querydsl.version>
-		<okhttp3.version>[3.14,)</okhttp3.version>
+		<okhttp3.version>3.14.19</okhttp3.version>
 		<junit-jupiter.version>5.7.1</junit-jupiter.version>
-		<testcontainers.version>[1.15,)</testcontainers.version>
-		<springdoc.version>[1.5,)</springdoc.version>
+		<testcontainers.version>1.16.0</testcontainers.version>
+		<docker.registry>dockerhub.com</docker.registry>
+		<docker.namespace>genslein</docker.namespace>
+		<springdoc.version>1.5.10</springdoc.version>
 	</properties>
 
 	<dependencies>
@@ -189,12 +190,6 @@
 		</dependency>
 		<dependency>
 			<groupId>org.testcontainers</groupId>
-			<artifactId>junit-jupiter</artifactId>
-			<version>${testcontainers.version}</version>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.testcontainers</groupId>
 			<artifactId>postgresql</artifactId>
 			<version>${testcontainers.version}</version>
 			<scope>test</scope>
@@ -212,7 +207,7 @@
 			<dependency>
 				<groupId>org.testcontainers</groupId>
 				<artifactId>testcontainers-bom</artifactId>
-				<version>${testcontainers.version}</version>
+				<version>1.16.0</version>
 				<type>pom</type>
 				<scope>import</scope>
 			</dependency>
@@ -225,34 +220,17 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
-<!--				<executions>-->
-<!--					<execution>-->
-<!--						<id>copy-dependencies</id>-->
-<!--						<phase>package</phase>-->
-<!--						<goals><goal>copy</goal></goals>-->
-<!--						<configuration>-->
-<!--							<artifactItems>-->
-<!--								<artifactItem>-->
-<!--									<groupId>org.flywaydb</groupId>-->
-<!--									<artifactId>flyway-core</artifactId>-->
-<!--									<version>7.15.0</version>-->
-<!--									<destFileName>flyway.jar</destFileName>-->
-<!--								</artifactItem>-->
-<!--								<artifactItem>-->
-<!--									<groupId>org.postgresql</groupId>-->
-<!--									<artifactId>postgresql</artifactId>-->
-<!--									<version>${postgresql.driver.version}</version>-->
-<!--									<destFileName>postgres.jar</destFileName>-->
-<!--								</artifactItem>-->
-<!--							</artifactItems>-->
-<!--						</configuration>-->
-<!--					</execution>-->
-<!--				</executions>-->
-			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-dependency-plugin</artifactId>
-				<version>3.1.2</version>
+				<configuration>
+					<mainClass>com.demo.fulfillment.FulfillmentApplication</mainClass>
+				</configuration>
+
+				<executions>
+					<execution>
+						<goals>
+							<goal>repackage</goal>
+						</goals>
+					</execution>
+				</executions>
 <!--				<executions>-->
 <!--					<execution>-->
 <!--						<id>copy-dependencies</id>-->
@@ -316,21 +294,6 @@
 						<type>maven-plugin</type>
 					</dependency>
 				</dependencies>
-			</plugin>
-			<plugin>
-				<groupId>org.springframework.boot</groupId>
-				<artifactId>spring-boot-maven-plugin</artifactId>
-				<configuration>
-					<mainClass>com.demo.fulfillment.FulfillmentApplication</mainClass>
-				</configuration>
-
-				<executions>
-					<execution>
-						<goals>
-							<goal>repackage</goal>
-						</goals>
-					</execution>
-				</executions>
 			</plugin>
 			<plugin>
 				<groupId>io.fabric8</groupId>
