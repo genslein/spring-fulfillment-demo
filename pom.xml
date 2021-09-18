@@ -25,6 +25,8 @@
 		<okhttp3.version>3.14.19</okhttp3.version>
 		<junit-jupiter.version>5.7.1</junit-jupiter.version>
 		<testcontainers.version>1.16.0</testcontainers.version>
+		<docker.registry>dockerhub.com</docker.registry>
+		<docker.namespace>genslein</docker.namespace>
 		<springdoc.version>1.5.10</springdoc.version>
 	</properties>
 
