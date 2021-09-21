@@ -42,6 +42,8 @@ public class FulfillmentApplication {
 		properties.setProperty("management.endpoint.metrics.enabled", "true");
 		properties.setProperty("management.endpoint.prometheus.enabled", "true");
 		properties.setProperty("management.metrics.export.prometheus.enabled", "true");
+		properties.setProperty("management.metrics.distribution.percentiles-histogram.http.server.requests", "true");
+		properties.setProperty("management.metrics.distribution.percentiles.http.server.requests", "0.5,0.75,0.9,0.95,0.99");
 		properties.setProperty("management.endpoints.web.exposure.include", "info,health,prometheus,metrics");
 
 		return properties;
