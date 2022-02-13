@@ -144,11 +144,11 @@
 			<artifactId>lombok</artifactId>
 			<version>[1.18.20,)</version>
 		</dependency>
-<!--		<dependency>-->
-<!--			<groupId>org.flywaydb</groupId>-->
-<!--			<artifactId>flyway-core</artifactId>-->
-<!--			<version>7.15.0</version>-->
-<!--		</dependency>-->
+		<dependency>
+			<groupId>org.flywaydb</groupId>
+			<artifactId>flyway-core</artifactId>
+			<version>[7.5,)</version>
+		</dependency>
 
 		<!--	 Testing Dependencies 	 -->
 		<dependency>
@@ -313,6 +313,34 @@
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-dependency-plugin</artifactId>
+				<version>3.1.2</version>
+				<executions>
+					<execution>
+						<id>copy-dependencies</id>
+						<phase>package</phase>
+						<goals><goal>copy</goal></goals>
+						<configuration>
+							<artifactItems>
+								<artifactItem>
+									<groupId>org.flywaydb</groupId>
+									<artifactId>flyway-core</artifactId>
+									<version>[7.5,)</version>
+									<destFileName>flyway.jar</destFileName>
+								</artifactItem>
+								<artifactItem>
+									<groupId>org.postgresql</groupId>
+									<artifactId>postgresql</artifactId>
+									<version>${postgresql.driver.version}</version>
+									<destFileName>postgres.jar</destFileName>
+								</artifactItem>
+							</artifactItems>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-surefire-plugin</artifactId>
 				<dependencies>
 					<dependency>
@@ -337,57 +365,6 @@
 						</goals>
 					</execution>
 				</executions>
-<!--				<executions>-->
-<!--					<execution>-->
-<!--						<id>copy-dependencies</id>-->
-<!--						<phase>package</phase>-->
-<!--						<goals><goal>copy</goal></goals>-->
-<!--						<configuration>-->
-<!--							<artifactItems>-->
-<!--								<artifactItem>-->
-<!--									<groupId>org.flywaydb</groupId>-->
-<!--									<artifactId>flyway-core</artifactId>-->
-<!--									<version>7.15.0</version>-->
-<!--									<destFileName>flyway.jar</destFileName>-->
-<!--								</artifactItem>-->
-<!--								<artifactItem>-->
-<!--									<groupId>org.postgresql</groupId>-->
-<!--									<artifactId>postgresql</artifactId>-->
-<!--									<version>${postgresql.driver.version}</version>-->
-<!--									<destFileName>postgres.jar</destFileName>-->
-<!--								</artifactItem>-->
-<!--							</artifactItems>-->
-<!--						</configuration>-->
-<!--					</execution>-->
-<!--				</executions>-->
-			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-dependency-plugin</artifactId>
-				<version>3.1.2</version>
-<!--				<executions>-->
-<!--					<execution>-->
-<!--						<id>copy-dependencies</id>-->
-<!--						<phase>package</phase>-->
-<!--						<goals><goal>copy</goal></goals>-->
-<!--						<configuration>-->
-<!--							<artifactItems>-->
-<!--								<artifactItem>-->
-<!--									<groupId>org.flywaydb</groupId>-->
-<!--									<artifactId>flyway-core</artifactId>-->
-<!--									<version>7.15.0</version>-->
-<!--									<destFileName>flyway.jar</destFileName>-->
-<!--								</artifactItem>-->
-<!--								<artifactItem>-->
-<!--									<groupId>org.postgresql</groupId>-->
-<!--									<artifactId>postgresql</artifactId>-->
-<!--									<version>${postgresql.driver.version}</version>-->
-<!--									<destFileName>postgres.jar</destFileName>-->
-<!--								</artifactItem>-->
-<!--							</artifactItems>-->
-<!--						</configuration>-->
-<!--					</execution>-->
-<!--				</executions>-->
 			</plugin>
 			<plugin>
 				<groupId>io.fabric8</groupId>
