@@ -16,7 +16,7 @@ import java.util.TimeZone;
 @OpenAPIDefinition(
 		info = @Info(title = "Fulfillment"),
 		externalDocs = @ExternalDocumentation(
-				url = "https://github.com/genslein/fulfillment-demo"
+				url = "https://github.com/genslein/spring-fulfillment-demo"
 		),
 		servers = {
 				@Server(url = "/")
