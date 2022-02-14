@@ -47,3 +47,15 @@ Locations as follows:
 - [JVM dashboard Template](https://grafana.com/grafana/dashboards/4701)
     - [Postgresql Dashboard](https://grafana.com/grafana/dashboards/9628)
     - List of [Other dashboard templates](https://grafana.com/grafana/dashboards)
+
+### Documentation
+You can have Fulfillment demo generate its own OpenAPI 3.0 JSON specification using the local docker-compose setup.
+
+```bash
+mvn clean install -Dskip-tests
+docker-compose up -d
+
+curl -X GET http://localhost:8080/v3/api-docs
+```
+Or you can navigate in a web browser to 
+[OpenAPI localhost Swagger URL](http://localhost:8080/swagger-ui/index.html?configUrl=/v3/api-docs/swagger-config) for the Swagger UI.
