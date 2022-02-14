@@ -18,4 +18,16 @@ public class CustomerService {
     public List<CustomerOrder> getLatestCustomerOrders() {
         return repository.getCustomerLatestOrders();
     }
+
+    public List<Customer> addCustomers(List<Customer> customers) {
+       return repository.saveAll(customers);
+    }
+
+    public void deleteCustomers(List<Customer> customers) {
+        repository.deleteAll(customers);
+    }
+
+    public void deleteAllCustomers(){
+        repository.deleteAll();
+    }
 }
