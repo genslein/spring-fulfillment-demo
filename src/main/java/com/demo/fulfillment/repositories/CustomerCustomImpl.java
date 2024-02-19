@@ -10,6 +10,7 @@ import org.springframework.data.jpa.repository.support.QuerydslRepositorySupport
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class CustomerCustomImpl extends QuerydslRepositorySupport
  implements CustomerCustom {
@@ -17,7 +18,7 @@ public class CustomerCustomImpl extends QuerydslRepositorySupport
     public CustomerCustomImpl() { super(Customer.class); }
 
     public List<CustomerOrder> getCustomerLatestOrders() {
-        JPAQuery<Tuple> query = new JPAQuery<>(getEntityManager());
+        JPAQuery<Tuple> query = new JPAQuery<>(Objects.requireNonNull(getEntityManager()));
 
         List<Tuple> result = query.distinct().select(QCustomer.customer, QOrder.order)
                 .from(QCustomer.customer)
