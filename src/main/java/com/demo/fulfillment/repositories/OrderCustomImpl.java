@@ -2,6 +2,8 @@ package com.demo.fulfillment.repositories;
 
 import com.demo.fulfillment.models.Customer;
 import com.demo.fulfillment.models.Order;
+//import com.demo.fulfillment.models.QCustomer;
+//import com.demo.fulfillment.models.QOrder;
 import com.demo.fulfillment.models.QCustomer;
 import com.demo.fulfillment.models.QOrder;
 import com.querydsl.core.Tuple;
@@ -20,7 +22,7 @@ public class OrderCustomImpl extends QuerydslRepositorySupport
     }
 
     public List<Pair<Order, Customer>> getOrderCustomerRecords() {
-        JPAQuery<Tuple> query = new JPAQuery<>(getEntityManager());
+        JPAQuery<Tuple> query = new JPAQuery<>();
 
         List<Tuple> result = query.select(QOrder.order, QCustomer.customer)
                 .from(QOrder.order)
