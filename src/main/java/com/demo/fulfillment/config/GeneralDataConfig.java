@@ -7,6 +7,7 @@ import org.flywaydb.core.Flyway;
 import org.flywaydb.core.api.MigrationVersion;
 import org.hibernate.cfg.Environment;
 import org.springdoc.core.GroupedOpenApi;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -55,13 +56,13 @@ public class GeneralDataConfig {
 
     @Bean
     @DependsOn("dataSource")
-    public LocalContainerEntityManagerFactoryBean entityManagerFactory(DataSource dataSource) {
+    public LocalContainerEntityManagerFactoryBean myEntityManagerFactory(DataSource dataSource) {
         LocalContainerEntityManagerFactoryBean entityManagerFactory = new LocalContainerEntityManagerFactoryBean();
         entityManagerFactory.setDataSource(dataSource);
         entityManagerFactory.setPackagesToScan("com.demo.fulfillment.models");
 
         HibernateJpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
-        vendorAdapter.setDatabasePlatform(org.hibernate.dialect.PostgreSQL10Dialect.class.getCanonicalName());
+        vendorAdapter.setDatabasePlatform(org.hibernate.dialect.PostgreSQLDialect.class.getCanonicalName());
         vendorAdapter.setGenerateDdl(true);
         entityManagerFactory.setJpaVendorAdapter(vendorAdapter);
 
@@ -72,7 +73,7 @@ public class GeneralDataConfig {
 
 
     @Bean
-    public PlatformTransactionManager transactionManager(LocalContainerEntityManagerFactoryBean entityManagerFactory) {
+    public JpaTransactionManager transactionManager(@Qualifier("myEntityManagerFactory") LocalContainerEntityManagerFactoryBean entityManagerFactory) {
         final JpaTransactionManager transactionManager = new JpaTransactionManager();
         transactionManager.setEntityManagerFactory(entityManagerFactory.getObject());
         return transactionManager;

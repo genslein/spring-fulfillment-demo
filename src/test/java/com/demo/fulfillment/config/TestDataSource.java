@@ -15,7 +15,7 @@ public class TestDataSource {
 
     @Bean
     PostgreSQLContainer postgreSQLContainer() {
-        final PostgreSQLContainer<?> container = new PostgreSQLContainer<>("postgres:12")
+        final PostgreSQLContainer<?> container = new PostgreSQLContainer<>("postgres:16")
                 .withDatabaseName("postgres")
                 .withUsername("bart")
                 .withPassword("51mp50n");

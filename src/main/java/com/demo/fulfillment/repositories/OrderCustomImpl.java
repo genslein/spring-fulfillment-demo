@@ -2,8 +2,6 @@ package com.demo.fulfillment.repositories;
 
 import com.demo.fulfillment.models.Customer;
 import com.demo.fulfillment.models.Order;
-//import com.demo.fulfillment.models.QCustomer;
-//import com.demo.fulfillment.models.QOrder;
 import com.demo.fulfillment.models.QCustomer;
 import com.demo.fulfillment.models.QOrder;
 import com.querydsl.core.Tuple;

@@ -11,7 +11,7 @@
 
 	<groupId>com.demo</groupId>
 	<artifactId>fulfillment</artifactId>
-	<version>0.1.0-SNAPSHOT</version>
+	<version>0.0.3-SNAPSHOT</version>
 	<name>fulfillment</name>
 	<description>Order Fulfillment Demo application for Spring Boot</description>
 
@@ -158,7 +158,7 @@
 		<dependency>
 			<groupId>org.flywaydb</groupId>
 			<artifactId>flyway-core</artifactId>
-			<version>8.4.4</version>
+			<version>10.8.1</version>
 		</dependency>
 
 		<!--	 Testing Dependencies 	 -->
@@ -187,21 +187,25 @@
 			<groupId>io.rest-assured</groupId>
 			<artifactId>rest-assured</artifactId>
 			<version>${io.restassured.version}</version>
+			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>io.rest-assured</groupId>
 			<artifactId>rest-assured-all</artifactId>
 			<version>${io.restassured.version}</version>
+			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>io.rest-assured</groupId>
 			<artifactId>json-path</artifactId>
 			<version>${io.restassured.version}</version>
+			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.hamcrest</groupId>
 			<artifactId>hamcrest</artifactId>
 			<version>[2.2,)</version>
+			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.hamcrest</groupId>
@@ -218,7 +222,7 @@
 		<dependency>
 			<groupId>org.junit.jupiter</groupId>
 			<artifactId>junit-jupiter-api</artifactId>
-			<version>5.7.1</version>
+			<version>${junit-jupiter.version}</version>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
@@ -329,7 +333,7 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-dependency-plugin</artifactId>
-				<version>3.1.2</version>
+				<version>3.6.1</version>
 				<executions>
 					<execution>
 						<id>copy-dependencies</id>
@@ -340,7 +344,7 @@
 								<artifactItem>
 									<groupId>org.flywaydb</groupId>
 									<artifactId>flyway-core</artifactId>
-									<version>8.4.4</version>
+									<version>10.8.1</version>
 									<destFileName>flyway.jar</destFileName>
 								</artifactItem>
 								<artifactItem>
