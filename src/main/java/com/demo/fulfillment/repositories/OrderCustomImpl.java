@@ -11,6 +11,7 @@ import org.springframework.data.util.Pair;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class OrderCustomImpl extends QuerydslRepositorySupport
         implements OrderCustom {
@@ -20,7 +21,7 @@ public class OrderCustomImpl extends QuerydslRepositorySupport
     }
 
     public List<Pair<Order, Customer>> getOrderCustomerRecords() {
-        JPAQuery<Tuple> query = new JPAQuery<>(getEntityManager());
+        JPAQuery<Tuple> query = new JPAQuery<>(Objects.requireNonNull(getEntityManager()));
 
         List<Tuple> result = query.select(QOrder.order, QCustomer.customer)
                 .from(QOrder.order)
@@ -30,7 +31,8 @@ public class OrderCustomImpl extends QuerydslRepositorySupport
         List<Pair<Order, Customer>> resultList = new ArrayList<>();
         for (Tuple t : result) {
             if (t.get(QCustomer.customer) != null && t.get(QOrder.order) != null) {
-                resultList.add(Pair.of(t.get(QOrder.order), t.get(QCustomer.customer)));
+                resultList.add(Pair.of(Objects.requireNonNull(t.get(QOrder.order)),
+                        Objects.requireNonNull(t.get(QCustomer.customer))));
             }
         }
 
