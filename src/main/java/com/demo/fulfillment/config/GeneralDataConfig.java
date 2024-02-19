@@ -48,7 +48,7 @@ public class GeneralDataConfig {
         final Properties hibernateProperties = new Properties();
         hibernateProperties.put(Environment.GENERATE_STATISTICS, true);
         hibernateProperties.setProperty(Environment.HBM2DDL_AUTO, "validate");
-        hibernateProperties.setProperty(Environment.DIALECT, org.hibernate.dialect.PostgreSQL10Dialect.class.getCanonicalName());
+        hibernateProperties.setProperty(Environment.DIALECT, org.hibernate.dialect.PostgreSQLDialect.class.getCanonicalName());
         hibernateProperties.setProperty(Environment.SHOW_SQL, "true");
         hibernateProperties.setProperty(Environment.FORMAT_SQL, "true");
 
