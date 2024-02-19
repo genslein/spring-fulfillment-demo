@@ -18,7 +18,7 @@
 	<properties>
 		<java.version>21</java.version>
 		<postgresql.driver.version>42.7.1</postgresql.driver.version>
-		<org.springframework.version>5.3.32</org.springframework.version>
+		<org.springframework.version>6.1.4</org.springframework.version>
 		<org.springframework.data.version>3.2.2</org.springframework.data.version>
 		<hibernate.version>6.4.4.Final</hibernate.version>
 		<com.querydsl.version>5.1.0</com.querydsl.version>

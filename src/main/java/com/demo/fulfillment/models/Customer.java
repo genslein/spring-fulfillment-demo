@@ -21,6 +21,7 @@ import java.util.UUID;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+// TODO: tracking https://github.com/FasterXML/jackson-databind/issues/4136
 @JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
 public class Customer {
 

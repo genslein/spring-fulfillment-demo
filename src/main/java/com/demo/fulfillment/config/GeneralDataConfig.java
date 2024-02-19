@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.DependsOn;
+import org.springframework.context.annotation.Primary;
 import org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.orm.jpa.JpaTransactionManager;
@@ -73,7 +74,7 @@ public class GeneralDataConfig {
 
 
     @Bean
-    public JpaTransactionManager transactionManager(@Qualifier("myEntityManagerFactory") LocalContainerEntityManagerFactoryBean entityManagerFactory) {
+    public PlatformTransactionManager transactionManager(LocalContainerEntityManagerFactoryBean entityManagerFactory) {
         final JpaTransactionManager transactionManager = new JpaTransactionManager();
         transactionManager.setEntityManagerFactory(entityManagerFactory.getObject());
         return transactionManager;
@@ -87,16 +88,14 @@ public class GeneralDataConfig {
     @Bean(initMethod = "migrate")
     @DependsOn({"dataSource"})
     Flyway flyway(DataSource dataSource) {
-        Flyway flyway = Flyway.configure()
+        return Flyway.configure()
                 .dataSource(dataSource)
                 .defaultSchema(DEFAULT_SCHEMA)
                 .createSchemas(CREATE_SCHEMAS_FLAG)
                 .schemas(SCHEMAS_NEEDED)
-                .baselineOnMigrate(true)
+                .baselineOnMigrate(FLYWAY_ENABLED)
                 .target(MigrationVersion.LATEST)
                 .load();
-
-        return flyway;
     }
 
     @Bean
