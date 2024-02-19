@@ -20,7 +20,7 @@ public class OrderCustomImpl extends QuerydslRepositorySupport
     }
 
     public List<Pair<Order, Customer>> getOrderCustomerRecords() {
-        JPAQuery<Tuple> query = new JPAQuery<>();
+        JPAQuery<Tuple> query = new JPAQuery<>(getEntityManager());
 
         List<Tuple> result = query.select(QOrder.order, QCustomer.customer)
                 .from(QOrder.order)

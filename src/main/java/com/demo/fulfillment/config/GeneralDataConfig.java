@@ -55,7 +55,7 @@ public class GeneralDataConfig {
 
     @Bean
     @DependsOn("dataSource")
-    public LocalContainerEntityManagerFactoryBean myEntityManagerFactory(DataSource dataSource) {
+    public LocalContainerEntityManagerFactoryBean entityManagerFactory(DataSource dataSource) {
         LocalContainerEntityManagerFactoryBean entityManagerFactory = new LocalContainerEntityManagerFactoryBean();
         entityManagerFactory.setDataSource(dataSource);
         entityManagerFactory.setPackagesToScan("com.demo.fulfillment.models");

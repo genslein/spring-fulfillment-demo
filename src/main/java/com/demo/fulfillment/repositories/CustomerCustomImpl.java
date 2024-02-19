@@ -17,7 +17,7 @@ public class CustomerCustomImpl extends QuerydslRepositorySupport
     public CustomerCustomImpl() { super(Customer.class); }
 
     public List<CustomerOrder> getCustomerLatestOrders() {
-        JPAQuery<Tuple> query = new JPAQuery<>();
+        JPAQuery<Tuple> query = new JPAQuery<>(getEntityManager());
 
         List<Tuple> result = query.distinct().select(QCustomer.customer, QOrder.order)
                 .from(QCustomer.customer)
