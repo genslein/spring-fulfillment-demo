@@ -11,7 +11,7 @@ import java.util.UUID;
 
 @Repository
 public interface OrderRepository extends JpaRepository<Order, UUID>,
-        //QuerydslBinderCustomizer<QOrder>,
+//        QuerydslBinderCustomizer<QOrder>,
         QuerydslPredicateExecutor<Order>,
         OrderCustom {
 }

@@ -1,4 +1,4 @@
-FROM adoptopenjdk/openjdk15:latest
+FROM eclipse-temurin:21-jdk
 
 WORKDIR /app
 

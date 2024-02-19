@@ -21,7 +21,7 @@ services:
       - '-jar'
       - 'fulfillment.jar'
   postgres_db:
-    image: postgres:12
+    image: postgres:15
     restart: 'always'
     ports:
       - '5432:5432'

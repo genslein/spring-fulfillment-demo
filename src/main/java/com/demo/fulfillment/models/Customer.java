@@ -2,6 +2,7 @@ package com.demo.fulfillment.models;
 
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -10,7 +11,6 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import javax.persistence.*;
 import java.sql.Date;
 import java.util.UUID;
 
@@ -21,6 +21,7 @@ import java.util.UUID;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+// TODO: tracking https://github.com/FasterXML/jackson-databind/issues/4136
 @JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
 public class Customer {
 

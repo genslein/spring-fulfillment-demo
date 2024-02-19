@@ -59,3 +59,11 @@ curl -X GET http://localhost:8080/v3/api-docs
 ```
 Or you can navigate in a web browser to 
 [OpenAPI localhost Swagger URL](http://localhost:8080/swagger-ui/index.html?configUrl=/v3/api-docs/swagger-config) for the Swagger UI.
+
+### Debugging QueryDSL
+
+A couple of things to try if Q-classes don't generate.
+
+* Check the plugin for JPA annotation processing [querydsl#3431](https://github.com/querydsl/querydsl/issues/3431)
+* Make sure `jakarta` is the persistence driver [querydsl#3436](https://github.com/querydsl/querydsl/issues/3436)
+* Run `mvn clean install -DskipTests` to run builds and check the `target/classes/.../models` folder
