@@ -10,6 +10,7 @@ services:
     environment:
       SPRING_PROFILES_ACTIVE: production
       JDBC_DATABASE_URL: jdbc:postgresql://postgres_db:5432/postgres?user=bart&password=51mp50n
+      RABBITMQ_AMQP_URL: 'amqp://rabbit:rabbit@rabbitmq:5672/my_vhost'
     ports:
       - '8080:8080'
       - '5005:5005'
@@ -31,3 +32,15 @@ services:
       POSTGRES_DB: postgres
       POSTGRES_USER: bart
       POSTGRES_PASSWORD: 51mp50n
+  rabbitmq:
+    image: rabbitmq:3-management
+    environment:
+      RABBITMQ_DEFAULT_USER: rabbit
+      RABBITMQ_DEFAULT_PASS: rabbit
+      RABBITMQ_DEFAULT_VHOST: my_vhost
+    ports:
+      - '5672:5672'
+      - '15672:15672'
+    expose:
+      - '5672'
+      - '15672'
