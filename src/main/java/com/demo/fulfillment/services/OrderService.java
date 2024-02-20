@@ -30,4 +30,8 @@ public class OrderService {
         logger.info("Found pairs of customer orders: " + firstOrders.size());
         return firstOrders;
     }
+
+    public Order save(Order order) {
+        return orderRepository.save(order);
+    }
 }

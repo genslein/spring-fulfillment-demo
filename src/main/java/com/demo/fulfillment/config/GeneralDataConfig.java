@@ -46,7 +46,7 @@ public class GeneralDataConfig {
         final Properties hibernateProperties = new Properties();
         hibernateProperties.put(Environment.GENERATE_STATISTICS, true);
         hibernateProperties.setProperty(Environment.HBM2DDL_AUTO, "validate");
-        hibernateProperties.setProperty(Environment.DIALECT, org.hibernate.dialect.PostgreSQL10Dialect.class.getCanonicalName());
+        hibernateProperties.setProperty(Environment.DIALECT, org.hibernate.dialect.PostgreSQLDialect.class.getCanonicalName());
         hibernateProperties.setProperty(Environment.SHOW_SQL, "true");
         hibernateProperties.setProperty(Environment.FORMAT_SQL, "true");
 
@@ -61,7 +61,7 @@ public class GeneralDataConfig {
         entityManagerFactory.setPackagesToScan("com.demo.fulfillment.models");
 
         HibernateJpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
-        vendorAdapter.setDatabasePlatform(org.hibernate.dialect.PostgreSQL10Dialect.class.getCanonicalName());
+        vendorAdapter.setDatabasePlatform(org.hibernate.dialect.PostgreSQLDialect.class.getCanonicalName());
         vendorAdapter.setGenerateDdl(true);
         entityManagerFactory.setJpaVendorAdapter(vendorAdapter);
 
@@ -86,16 +86,14 @@ public class GeneralDataConfig {
     @Bean(initMethod = "migrate")
     @DependsOn({"dataSource"})
     Flyway flyway(DataSource dataSource) {
-        Flyway flyway = Flyway.configure()
+        return Flyway.configure()
                 .dataSource(dataSource)
                 .defaultSchema(DEFAULT_SCHEMA)
                 .createSchemas(CREATE_SCHEMAS_FLAG)
                 .schemas(SCHEMAS_NEEDED)
-                .baselineOnMigrate(true)
+                .baselineOnMigrate(FLYWAY_ENABLED)
                 .target(MigrationVersion.LATEST)
                 .load();
-
-        return flyway;
     }
 
     @Bean

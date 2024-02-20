@@ -4,19 +4,16 @@ import com.demo.fulfillment.models.subtypes.OrderItem;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
-import com.vladmihalcea.hibernate.type.json.JsonBinaryType;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import io.hypersistence.utils.hibernate.type.json.JsonBinaryType;
+import jakarta.persistence.*;
+import jakarta.persistence.AccessType;
+import jakarta.persistence.Entity;
+import jakarta.persistence.ForeignKey;
+import jakarta.persistence.Table;
+import lombok.*;
 import org.hibernate.annotations.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import javax.persistence.*;
-import javax.persistence.AccessType;
-import javax.persistence.Entity;
-import javax.persistence.ForeignKey;
-import javax.persistence.Table;
 import java.sql.Date;
 import java.util.List;
 import java.util.UUID;
@@ -28,7 +25,6 @@ import java.util.UUID;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@TypeDefs({@TypeDef(name = "jsonb", typeClass = JsonBinaryType.class)})
 @JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
 public class Order {
 
@@ -49,7 +45,7 @@ public class Order {
                 foreignKey = @ForeignKey(name = "fk_customer_id_order"))
     private Customer customer;
 
-    @Type(type = "jsonb")
+    @Type(JsonBinaryType.class)
     @Column(name = "items", columnDefinition = "jsonb")
     private List<OrderItem> items;
 

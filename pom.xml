@@ -5,30 +5,30 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>2.5.4</version>
+		<version>3.2.2</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 
 	<groupId>com.demo</groupId>
 	<artifactId>fulfillment</artifactId>
-	<version>0.0.3-SNAPSHOT</version>
+	<version>0.0.4-SNAPSHOT</version>
 	<name>fulfillment</name>
 	<description>Order Fulfillment Demo application for Spring Boot</description>
 
 	<properties>
-		<java.version>15</java.version>
-		<postgresql.driver.version>42.4.1</postgresql.driver.version>
-		<org.springframework.version>5.3.9</org.springframework.version>
-		<org.springframework.data.version>2.5.4</org.springframework.data.version>
-		<hibernate.version>5.4.30.Final</hibernate.version>
-		<com.querydsl.version>4.4.0</com.querydsl.version>
-		<okhttp3.version>3.14.9</okhttp3.version>
-		<junit-jupiter.version>5.7.1</junit-jupiter.version>
-		<testcontainers.version>1.16.0</testcontainers.version>
-		<docker.registry>dockerhub.com</docker.registry>
+		<java.version>21</java.version>
+		<postgresql.driver.version>42.7.1</postgresql.driver.version>
+		<org.springframework.version>6.1.4</org.springframework.version>
+		<org.springframework.data.version>3.2.2</org.springframework.data.version>
+		<hibernate.version>6.4.4.Final</hibernate.version>
+		<com.querydsl.version>5.1.0</com.querydsl.version>
+		<okhttp3.version>4.12.0</okhttp3.version>
+		<junit-jupiter.version>5.10.2</junit-jupiter.version>
+		<testcontainers.version>1.19.5</testcontainers.version>
+		<docker.registry>docker.io</docker.registry>
 		<docker.namespace>genslein</docker.namespace>
-		<springdoc.version>1.5.10</springdoc.version>
-		<io.restassured.version>[4.3,)</io.restassured.version>
+		<springdoc.version>1.6.15</springdoc.version>
+		<io.restassured.version>[5.3,)</io.restassured.version>
 	</properties>
 
 	<dependencies>
@@ -60,6 +60,14 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-jpa</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-amqp</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-validation</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework</groupId>
@@ -99,18 +107,22 @@
 <!--		</dependency>-->
 
 		<dependency>
-			<groupId>com.vladmihalcea</groupId>
-			<artifactId>hibernate-types-52</artifactId>
-			<version>[2.9,)</version>
+			<groupId>io.hypersistence</groupId>
+			<artifactId>hypersistence-utils-hibernate-63</artifactId>
+			<version>3.7.3</version>
 		</dependency>
 		<dependency>
-			<groupId>org.hibernate</groupId>
+			<groupId>com.fasterxml.jackson.module</groupId>
+			<artifactId>jackson-module-jakarta-xmlbind-annotations</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.hibernate.orm</groupId>
 			<artifactId>hibernate-hikaricp</artifactId>
 			<version>${hibernate.version}</version>
 		</dependency>
 		<dependency>
-			<groupId>org.hibernate</groupId>
-			<artifactId>hibernate-entitymanager</artifactId>
+			<groupId>org.hibernate.orm</groupId>
+			<artifactId>hibernate-core</artifactId>
 			<version>${hibernate.version}</version>
 		</dependency>
 		<dependency>
@@ -128,11 +140,14 @@
 			<groupId>com.querydsl</groupId>
 			<artifactId>querydsl-apt</artifactId>
 			<version>${com.querydsl.version}</version>
+			<classifier>jakarta</classifier>
+			<scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>com.querydsl</groupId>
 			<artifactId>querydsl-jpa</artifactId>
 			<version>${com.querydsl.version}</version>
+			<classifier>jakarta</classifier>
 		</dependency>
 		<dependency>
 			<groupId>org.postgresql</groupId>
@@ -147,7 +162,12 @@
 		<dependency>
 			<groupId>org.flywaydb</groupId>
 			<artifactId>flyway-core</artifactId>
-			<version>8.4.4</version>
+			<version>10.8.1</version>
+		</dependency>
+		<dependency>
+			<groupId>org.flywaydb</groupId>
+			<artifactId>flyway-database-postgresql</artifactId>
+			<version>10.8.1</version>
 		</dependency>
 
 		<!--	 Testing Dependencies 	 -->
@@ -176,21 +196,25 @@
 			<groupId>io.rest-assured</groupId>
 			<artifactId>rest-assured</artifactId>
 			<version>${io.restassured.version}</version>
+			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>io.rest-assured</groupId>
 			<artifactId>rest-assured-all</artifactId>
 			<version>${io.restassured.version}</version>
+			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>io.rest-assured</groupId>
 			<artifactId>json-path</artifactId>
 			<version>${io.restassured.version}</version>
+			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.hamcrest</groupId>
 			<artifactId>hamcrest</artifactId>
 			<version>[2.2,)</version>
+			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.hamcrest</groupId>
@@ -207,7 +231,7 @@
 		<dependency>
 			<groupId>org.junit.jupiter</groupId>
 			<artifactId>junit-jupiter-api</artifactId>
-			<version>5.7.1</version>
+			<version>${junit-jupiter.version}</version>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
@@ -260,7 +284,7 @@
 		<dependency>
 			<groupId>org.assertj</groupId>
 			<artifactId>assertj-core</artifactId>
-			<version>3.18.0</version>
+			<version>3.25.3</version>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
@@ -288,6 +312,11 @@
 			<version>${okhttp3.version}</version>
 			<scope>test</scope>
 		</dependency>
+		<dependency>
+			<groupId>jakarta.persistence</groupId>
+			<artifactId>jakarta.persistence-api</artifactId>
+			<version>3.1.0</version>
+		</dependency>
 	</dependencies>
 
 	<dependencyManagement>
@@ -308,7 +337,7 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-dependency-plugin</artifactId>
-				<version>3.1.2</version>
+				<version>3.6.1</version>
 				<executions>
 					<execution>
 						<id>copy-dependencies</id>
@@ -319,8 +348,14 @@
 								<artifactItem>
 									<groupId>org.flywaydb</groupId>
 									<artifactId>flyway-core</artifactId>
-									<version>8.4.4</version>
+									<version>10.8.1</version>
 									<destFileName>flyway.jar</destFileName>
+								</artifactItem>
+								<artifactItem>
+									<groupId>org.flywaydb</groupId>
+									<artifactId>flyway-database-postgresql</artifactId>
+									<version>10.8.1</version>
+									<destFileName>flyway-database-postgresql.jar</destFileName>
 								</artifactItem>
 								<artifactItem>
 									<groupId>org.postgresql</groupId>
@@ -363,7 +398,7 @@
 			<plugin>
 				<groupId>io.fabric8</groupId>
 				<artifactId>docker-maven-plugin</artifactId>
-				<version>0.34.0</version>
+				<version>0.43.4</version>
 				<configuration>
 					<verbose>true</verbose>
 					<images>
@@ -421,7 +456,6 @@
 							<goal>process</goal>
 						</goals>
 						<configuration>
-							<outputDirectory>${project.build.directory}/generated-sources</outputDirectory>
 							<processor>com.querydsl.apt.jpa.JPAAnnotationProcessor</processor>
 						</configuration>
 					</execution>
