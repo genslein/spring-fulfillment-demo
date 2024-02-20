@@ -1,13 +1,15 @@
 package com.demo.fulfillment.config;
 
+import com.rabbitmq.client.impl.MicrometerMetricsCollector;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
-import org.flywaydb.core.Flyway;
-import org.flywaydb.core.api.MigrationVersion;
+import io.micrometer.core.instrument.MeterRegistry;
+import org.springframework.amqp.rabbit.connection.CachingConnectionFactory;
+import org.springframework.amqp.rabbit.connection.ConnectionFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.DependsOn;
 import org.springframework.context.annotation.Profile;
 
 import javax.sql.DataSource;
@@ -21,6 +23,12 @@ public class DataSourceConfig {
     @Value("${logging.level.root:}")
     public String LOG_SQL;
 
+    @Value("${RABBITMQ_AMQP_URL}")
+    protected String RABBITMQ_AMQP_URL;
+
+    @Autowired
+    MeterRegistry meterRegistry;
+
     @Bean
     public DataSource dataSource() {
         HikariConfig config = new HikariConfig();
@@ -33,4 +41,20 @@ public class DataSourceConfig {
 
         return new HikariDataSource(config);
     }
+
+    @Bean
+    ConnectionFactory connectionFactory() {
+        CachingConnectionFactory connectionFactory = new CachingConnectionFactory();
+
+        // Example RABBITMQ_AMQP_URI in BMS
+        // String connUri = "amqp://{user_name}:{password}@{host}:{port}/{vhost}";
+        connectionFactory.setUri(RABBITMQ_AMQP_URL);
+        connectionFactory.setConnectionTimeout(5);
+
+        MicrometerMetricsCollector metricsCollector = new MicrometerMetricsCollector(meterRegistry, "rabbitmq.client");
+        connectionFactory.getRabbitConnectionFactory().setMetricsCollector(metricsCollector);
+
+        return connectionFactory;
+    }
+
 }

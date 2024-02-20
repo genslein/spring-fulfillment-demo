@@ -2,7 +2,6 @@
 
 This is the demo Fulfillment application associated with my blog posts about my experience with Java and Spring Boot as a Ruby lover.
 
-
 ### Auto-generated Getting Started Section
 
 #### Reference Documentation
@@ -29,6 +28,23 @@ The following guides illustrate how to use some features concretely:
 * [Authenticating a User with LDAP](https://spring.io/guides/gs/authenticating-ldap/)
 
 ## Docker Debugging
+
+### Debugging Docker builds
+When needing to introspect the image after a successful build, it can be useful to override the Java entrypoint.
+
+```bash
+# Example form for the container creation
+# docker run -it --entrypoint [new_command] [docker_image] [optional:value]
+docker run -it --entrypoint /bin/bash fulfillment:0.0.X-SNAPSHOT
+```
+
+Additionally, if you need to rebuild fulfillment's image locally but don't want to
+tear down your postgres or rabbitmq in docker-compose:
+
+```bash
+mvn clean install -DskipTests
+docker-compose up -d --no-deps --build fulfillment
+```
 
 ### Prometheus and Grafana locally
 Because Prometheus and Grafana are not required, they are optional to run.
@@ -67,3 +83,8 @@ A couple of things to try if Q-classes don't generate.
 * Check the plugin for JPA annotation processing [querydsl#3431](https://github.com/querydsl/querydsl/issues/3431)
 * Make sure `jakarta` is the persistence driver [querydsl#3436](https://github.com/querydsl/querydsl/issues/3436)
 * Run `mvn clean install -DskipTests` to run builds and check the `target/classes/.../models` folder
+
+## Future Improvements
+
+* looking into strongly-typed JsonExpression queries for Postgresql in QueryDSL
+  * [hibernate-types-querydsl-apt](https://github.com/jwgmeligmeyling/hibernate-types-querydsl-apt)

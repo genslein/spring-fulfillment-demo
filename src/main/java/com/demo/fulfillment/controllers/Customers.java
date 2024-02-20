@@ -49,7 +49,7 @@ public class Customers {
                             schema = @Schema(implementation = Customer.class)) }),
             @ApiResponse(responseCode = "500", description = "Unable to create Customer") })
     @ResponseBody Customer createCustomer(Customer customer) {
-        return service.addCustomers(Collections.singletonList(customer)).get(0);
+        return service.addCustomers(Collections.singletonList(customer)).getFirst();
     }
 
     @PostMapping(value = "/random", consumes = MediaType.ALL_VALUE)
