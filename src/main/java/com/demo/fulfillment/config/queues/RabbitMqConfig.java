@@ -15,7 +15,6 @@ import org.springframework.context.annotation.Configuration;
 @EnableRabbit
 public class RabbitMqConfig {
     public static final Integer MESSAGE_DELAY = 60000; // 1 minute in Milliseconds
-    public static final Integer SUPPLEMENT_MESSAGE_DELAY = 600000; // 1 minute in Milliseconds
     public static final String ORDERS_QUEUE_NAME = "queue_orders_processed";
     public static final String ORDERS_DEADLETTER_QUEUE_NAME = ORDERS_QUEUE_NAME + ".dlq";
     public static final String EXCHANGE_NAME = "fulfillment_jobs";

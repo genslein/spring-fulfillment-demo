@@ -1,0 +1,482 @@
+---
+- InitNode: null
+  agentsCount: 3
+  agentsRunning: 3
+  hasLoadbalancer: true
+  imageVolume: k3d-demo-images
+  name: demo
+  network:
+    Members: null
+    id: ""
+    ipam:
+      Managed: false
+      ipPrefix: ""
+    name: k3d-demo
+  nodes:
+  - Cmd:
+    - noop
+    ExtraHosts: null
+    GPURequest: ""
+    IP:
+      IP: ""
+      Static: false
+    Memory: ""
+    Networks:
+    - k3d-demo
+    State:
+      Running: true
+      Started: ""
+      Status: running
+    agentOpts: {}
+    created: "2024-02-26T02:23:03.350368961Z"
+    env:
+    - K3S_KUBECONFIG_OUTPUT=/output/kubeconfig.yaml
+    - PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+    image: sha256:5f274eb99fdb4fd967ecfcfaec0851aec44e7035c71cad655bb5706ecb309481
+    name: k3d-demo-tools
+    runtimeLabels:
+      k3d.cluster: demo
+      k3d.role: noRole
+      k3d.version: v5.6.0
+    serverOpts:
+      kubeAPI:
+        Binding:
+          HostIp: ""
+          HostPort: ""
+        Port: ""
+    volumes:
+    - k3d-demo-images:/k3d/images
+    - /run/host-services/docker.proxy.sock:/var/run/docker.sock
+  - Cmd: null
+    ExtraHosts: null
+    GPURequest: ""
+    IP:
+      IP: 172.18.0.9
+      Static: false
+    Memory: ""
+    Networks:
+    - k3d-demo
+    State:
+      Running: true
+      Started: ""
+      Status: running
+    agentOpts: {}
+    created: "2024-02-26T02:23:03.199646502Z"
+    env:
+    - K3S_KUBECONFIG_OUTPUT=/output/kubeconfig.yaml
+    - PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+    - NGINX_VERSION=1.25.1
+    - PKG_RELEASE=1
+    - NJS_VERSION=0.7.12
+    - OS=
+    - ARCH=
+    image: sha256:42fd020d3a5447aaeb2f4a900f5525df1a3a2025632bb69c1f918d1f4a47c4a4
+    name: k3d-demo-serverlb
+    portMappings:
+      80/tcp:
+      - HostIp: ""
+        HostPort: "8080"
+      "6443":
+      - HostIp: 0.0.0.0
+        HostPort: "6550"
+    restart: true
+    role: loadbalancer
+    runtimeLabels:
+      k3d.cluster: demo
+      k3d.cluster.imageVolume: k3d-demo-images
+      k3d.cluster.network: k3d-demo
+      k3d.cluster.network.external: "false"
+      k3d.cluster.network.id: 43a174e9533930bca858e351e995562b533c3bdbc1bb7bbeb3d1e1339efc8e86
+      k3d.cluster.network.iprange: 172.18.0.0/16
+      k3d.cluster.token: HcRsKuKfcIPfqNPpkePE
+      k3d.cluster.url: https://k3d-demo-server-0:6443
+      k3d.role: loadbalancer
+      k3d.server.loadbalancer: k3d-demo-serverlb
+      k3d.version: v5.6.0
+    serverOpts:
+      kubeAPI:
+        Binding:
+          HostIp: ""
+          HostPort: ""
+        Port: ""
+    volumes:
+    - k3d-demo-images:/k3d/images
+  - Cmd:
+    - agent
+    ExtraHosts: null
+    GPURequest: ""
+    IP:
+      IP: 172.18.0.6
+      Static: false
+    Memory: ""
+    Networks:
+    - k3d-demo
+    State:
+      Running: true
+      Started: ""
+      Status: running
+    agentOpts: {}
+    created: "2024-02-26T02:23:00.510537334Z"
+    env:
+    - K3S_TOKEN=HcRsKuKfcIPfqNPpkePE
+    - K3S_URL=https://k3d-demo-server-0:6443
+    - K3S_KUBECONFIG_OUTPUT=/output/kubeconfig.yaml
+    - PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/bin/aux
+    - CRI_CONFIG_FILE=/var/lib/rancher/k3s/agent/etc/crictl.yaml
+    image: sha256:cc8dc6c91da6504337480906ffd619a6e415700a0fe57eb4b1f77ec5faea928b
+    name: k3d-demo-agent-2
+    restart: true
+    role: agent
+    runtimeLabels:
+      k3d.cluster: demo
+      k3d.cluster.imageVolume: k3d-demo-images
+      k3d.cluster.network: k3d-demo
+      k3d.cluster.network.external: "false"
+      k3d.cluster.network.id: 43a174e9533930bca858e351e995562b533c3bdbc1bb7bbeb3d1e1339efc8e86
+      k3d.cluster.network.iprange: 172.18.0.0/16
+      k3d.cluster.token: HcRsKuKfcIPfqNPpkePE
+      k3d.cluster.url: https://k3d-demo-server-0:6443
+      k3d.role: agent
+      k3d.server.loadbalancer: k3d-demo-serverlb
+      k3d.version: v5.6.0
+    serverOpts:
+      kubeAPI:
+        Binding:
+          HostIp: ""
+          HostPort: ""
+        Port: ""
+    volumes:
+    - k3d-demo-images:/k3d/images
+  - Cmd:
+    - agent
+    ExtraHosts: null
+    GPURequest: ""
+    IP:
+      IP: 172.18.0.8
+      Static: false
+    Memory: ""
+    Networks:
+    - k3d-demo
+    State:
+      Running: true
+      Started: ""
+      Status: running
+    agentOpts: {}
+    created: "2024-02-26T02:23:00.492461168Z"
+    env:
+    - K3S_TOKEN=HcRsKuKfcIPfqNPpkePE
+    - K3S_URL=https://k3d-demo-server-0:6443
+    - K3S_KUBECONFIG_OUTPUT=/output/kubeconfig.yaml
+    - PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/bin/aux
+    - CRI_CONFIG_FILE=/var/lib/rancher/k3s/agent/etc/crictl.yaml
+    image: sha256:cc8dc6c91da6504337480906ffd619a6e415700a0fe57eb4b1f77ec5faea928b
+    name: k3d-demo-agent-1
+    restart: true
+    role: agent
+    runtimeLabels:
+      k3d.cluster: demo
+      k3d.cluster.imageVolume: k3d-demo-images
+      k3d.cluster.network: k3d-demo
+      k3d.cluster.network.external: "false"
+      k3d.cluster.network.id: 43a174e9533930bca858e351e995562b533c3bdbc1bb7bbeb3d1e1339efc8e86
+      k3d.cluster.network.iprange: 172.18.0.0/16
+      k3d.cluster.token: HcRsKuKfcIPfqNPpkePE
+      k3d.cluster.url: https://k3d-demo-server-0:6443
+      k3d.role: agent
+      k3d.server.loadbalancer: k3d-demo-serverlb
+      k3d.version: v5.6.0
+    serverOpts:
+      kubeAPI:
+        Binding:
+          HostIp: ""
+          HostPort: ""
+        Port: ""
+    volumes:
+    - k3d-demo-images:/k3d/images
+  - Cmd:
+    - agent
+    ExtraHosts: null
+    GPURequest: ""
+    IP:
+      IP: 172.18.0.7
+      Static: false
+    Memory: ""
+    Networks:
+    - k3d-demo
+    State:
+      Running: true
+      Started: ""
+      Status: running
+    agentOpts: {}
+    created: "2024-02-26T02:23:00.472421626Z"
+    env:
+    - K3S_TOKEN=HcRsKuKfcIPfqNPpkePE
+    - K3S_URL=https://k3d-demo-server-0:6443
+    - K3S_KUBECONFIG_OUTPUT=/output/kubeconfig.yaml
+    - PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/bin/aux
+    - CRI_CONFIG_FILE=/var/lib/rancher/k3s/agent/etc/crictl.yaml
+    image: sha256:cc8dc6c91da6504337480906ffd619a6e415700a0fe57eb4b1f77ec5faea928b
+    name: k3d-demo-agent-0
+    restart: true
+    role: agent
+    runtimeLabels:
+      k3d.cluster: demo
+      k3d.cluster.imageVolume: k3d-demo-images
+      k3d.cluster.network: k3d-demo
+      k3d.cluster.network.external: "false"
+      k3d.cluster.network.id: 43a174e9533930bca858e351e995562b533c3bdbc1bb7bbeb3d1e1339efc8e86
+      k3d.cluster.network.iprange: 172.18.0.0/16
+      k3d.cluster.token: HcRsKuKfcIPfqNPpkePE
+      k3d.cluster.url: https://k3d-demo-server-0:6443
+      k3d.role: agent
+      k3d.server.loadbalancer: k3d-demo-serverlb
+      k3d.version: v5.6.0
+    serverOpts:
+      kubeAPI:
+        Binding:
+          HostIp: ""
+          HostPort: ""
+        Port: ""
+    volumes:
+    - k3d-demo-images:/k3d/images
+  - Cmd:
+    - server
+    - --tls-san
+    - 0.0.0.0
+    - --tls-san
+    - k3d-demo-serverlb
+    ExtraHosts: null
+    GPURequest: ""
+    IP:
+      IP: 172.18.0.5
+      Static: false
+    Memory: ""
+    Networks:
+    - k3d-demo
+    State:
+      Running: true
+      Started: ""
+      Status: running
+    agentOpts: {}
+    created: "2024-02-26T02:23:00.442615501Z"
+    env:
+    - K3S_TOKEN=HcRsKuKfcIPfqNPpkePE
+    - K3S_URL=https://k3d-demo-server-0:6443
+    - K3S_KUBECONFIG_OUTPUT=/output/kubeconfig.yaml
+    - PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/bin/aux
+    - CRI_CONFIG_FILE=/var/lib/rancher/k3s/agent/etc/crictl.yaml
+    image: sha256:cc8dc6c91da6504337480906ffd619a6e415700a0fe57eb4b1f77ec5faea928b
+    name: k3d-demo-server-2
+    restart: true
+    role: server
+    runtimeLabels:
+      k3d.cluster: demo
+      k3d.cluster.imageVolume: k3d-demo-images
+      k3d.cluster.network: k3d-demo
+      k3d.cluster.network.external: "false"
+      k3d.cluster.network.id: 43a174e9533930bca858e351e995562b533c3bdbc1bb7bbeb3d1e1339efc8e86
+      k3d.cluster.network.iprange: 172.18.0.0/16
+      k3d.cluster.token: HcRsKuKfcIPfqNPpkePE
+      k3d.cluster.url: https://k3d-demo-server-0:6443
+      k3d.role: server
+      k3d.server.api.host: 0.0.0.0
+      k3d.server.api.hostIP: 0.0.0.0
+      k3d.server.api.port: "6550"
+      k3d.server.init: "false"
+      k3d.server.loadbalancer: k3d-demo-serverlb
+      k3d.version: v5.6.0
+    serverOpts:
+      kubeAPI:
+        Binding:
+          HostIp: 0.0.0.0
+          HostPort: "6550"
+        Port: ""
+        host: 0.0.0.0
+    volumes:
+    - k3d-demo-images:/k3d/images
+  - Cmd:
+    - server
+    - --tls-san
+    - 0.0.0.0
+    - --tls-san
+    - k3d-demo-serverlb
+    ExtraHosts: null
+    GPURequest: ""
+    IP:
+      IP: 172.18.0.4
+      Static: false
+    Memory: ""
+    Networks:
+    - k3d-demo
+    State:
+      Running: true
+      Started: ""
+      Status: running
+    agentOpts: {}
+    created: "2024-02-26T02:22:59.397551584Z"
+    env:
+    - K3S_TOKEN=HcRsKuKfcIPfqNPpkePE
+    - K3S_URL=https://k3d-demo-server-0:6443
+    - K3S_KUBECONFIG_OUTPUT=/output/kubeconfig.yaml
+    - PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/bin/aux
+    - CRI_CONFIG_FILE=/var/lib/rancher/k3s/agent/etc/crictl.yaml
+    image: sha256:cc8dc6c91da6504337480906ffd619a6e415700a0fe57eb4b1f77ec5faea928b
+    name: k3d-demo-server-1
+    restart: true
+    role: server
+    runtimeLabels:
+      k3d.cluster: demo
+      k3d.cluster.imageVolume: k3d-demo-images
+      k3d.cluster.network: k3d-demo
+      k3d.cluster.network.external: "false"
+      k3d.cluster.network.id: 43a174e9533930bca858e351e995562b533c3bdbc1bb7bbeb3d1e1339efc8e86
+      k3d.cluster.network.iprange: 172.18.0.0/16
+      k3d.cluster.token: HcRsKuKfcIPfqNPpkePE
+      k3d.cluster.url: https://k3d-demo-server-0:6443
+      k3d.role: server
+      k3d.server.api.host: 0.0.0.0
+      k3d.server.api.hostIP: 0.0.0.0
+      k3d.server.api.port: "6550"
+      k3d.server.init: "false"
+      k3d.server.loadbalancer: k3d-demo-serverlb
+      k3d.version: v5.6.0
+    serverOpts:
+      kubeAPI:
+        Binding:
+          HostIp: 0.0.0.0
+          HostPort: "6550"
+        Port: ""
+        host: 0.0.0.0
+    volumes:
+    - k3d-demo-images:/k3d/images
+  - Cmd:
+    - server
+    - --cluster-init
+    - --tls-san
+    - 0.0.0.0
+    - --tls-san
+    - k3d-demo-serverlb
+    ExtraHosts: null
+    GPURequest: ""
+    IP:
+      IP: 172.18.0.3
+      Static: false
+    Memory: ""
+    Networks:
+    - k3d-demo
+    State:
+      Running: true
+      Started: ""
+      Status: running
+    agentOpts: {}
+    created: "2024-02-26T02:22:58.351791583Z"
+    env:
+    - K3S_TOKEN=HcRsKuKfcIPfqNPpkePE
+    - K3S_KUBECONFIG_OUTPUT=/output/kubeconfig.yaml
+    - PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/bin/aux
+    - CRI_CONFIG_FILE=/var/lib/rancher/k3s/agent/etc/crictl.yaml
+    image: sha256:cc8dc6c91da6504337480906ffd619a6e415700a0fe57eb4b1f77ec5faea928b
+    name: k3d-demo-server-0
+    restart: true
+    role: server
+    runtimeLabels:
+      k3d.cluster: demo
+      k3d.cluster.imageVolume: k3d-demo-images
+      k3d.cluster.network: k3d-demo
+      k3d.cluster.network.external: "false"
+      k3d.cluster.network.id: 43a174e9533930bca858e351e995562b533c3bdbc1bb7bbeb3d1e1339efc8e86
+      k3d.cluster.network.iprange: 172.18.0.0/16
+      k3d.cluster.token: HcRsKuKfcIPfqNPpkePE
+      k3d.cluster.url: https://k3d-demo-server-0:6443
+      k3d.role: server
+      k3d.server.api.host: 0.0.0.0
+      k3d.server.api.hostIP: 0.0.0.0
+      k3d.server.api.port: "6550"
+      k3d.server.init: "true"
+      k3d.server.loadbalancer: k3d-demo-serverlb
+      k3d.version: v5.6.0
+    serverOpts:
+      isInitializingServer: true
+      kubeAPI:
+        Binding:
+          HostIp: 0.0.0.0
+          HostPort: "6550"
+        Port: ""
+        host: 0.0.0.0
+    volumes:
+    - k3d-demo-images:/k3d/images
+  serverLoadBalancer:
+    Cmd: null
+    ExtraHosts: null
+    GPURequest: ""
+    IP:
+      IP: 172.18.0.9
+      Static: false
+    Memory: ""
+    Networks:
+    - k3d-demo
+    State:
+      Running: true
+      Started: ""
+      Status: running
+    agentOpts: {}
+    config:
+      ports:
+        80.tcp:
+        - k3d-demo-server-0
+        - k3d-demo-server-1
+        - k3d-demo-server-2
+        - k3d-demo-agent-0
+        - k3d-demo-agent-1
+        - k3d-demo-agent-2
+        6443.tcp:
+        - k3d-demo-server-0
+        - k3d-demo-server-1
+        - k3d-demo-server-2
+      settings:
+        workerConnections: 1024
+    created: "2024-02-26T02:23:03.199646502Z"
+    env:
+    - K3S_KUBECONFIG_OUTPUT=/output/kubeconfig.yaml
+    - PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+    - NGINX_VERSION=1.25.1
+    - PKG_RELEASE=1
+    - NJS_VERSION=0.7.12
+    - OS=
+    - ARCH=
+    image: sha256:42fd020d3a5447aaeb2f4a900f5525df1a3a2025632bb69c1f918d1f4a47c4a4
+    name: k3d-demo-serverlb
+    portMappings:
+      80/tcp:
+      - HostIp: ""
+        HostPort: "8080"
+      "6443":
+      - HostIp: 0.0.0.0
+        HostPort: "6550"
+    restart: true
+    role: loadbalancer
+    runtimeLabels:
+      k3d.cluster: demo
+      k3d.cluster.imageVolume: k3d-demo-images
+      k3d.cluster.network: k3d-demo
+      k3d.cluster.network.external: "false"
+      k3d.cluster.network.id: 43a174e9533930bca858e351e995562b533c3bdbc1bb7bbeb3d1e1339efc8e86
+      k3d.cluster.network.iprange: 172.18.0.0/16
+      k3d.cluster.token: HcRsKuKfcIPfqNPpkePE
+      k3d.cluster.url: https://k3d-demo-server-0:6443
+      k3d.role: loadbalancer
+      k3d.server.loadbalancer: k3d-demo-serverlb
+      k3d.version: v5.6.0
+    serverOpts:
+      kubeAPI:
+        Binding:
+          HostIp: ""
+          HostPort: ""
+        Port: ""
+    volumes:
+    - k3d-demo-images:/k3d/images
+  serversCount: 3
+  serversRunning: 3
+  volumes:
+  - k3d-demo-images
+
